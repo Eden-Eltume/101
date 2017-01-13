@@ -1,0 +1,9 @@
+# Casual form
+1. take two numbers and add them
+2. take a list of words and combine them as one word
+3. take a list of numbers and return a list with every other number in it.
+
+# Formal form
+1. take two integers and add them together
+2. take an array of strings and concatenate them as one string
+3. take an array of integers and return an array with every other number in it.
