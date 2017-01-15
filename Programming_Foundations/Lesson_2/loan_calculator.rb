@@ -46,13 +46,7 @@ loop do
   print "Another calculation? (y/n): "
   answer = gets.chomp.strip.downcase
 
-  if answer == "yes"
-    redo
-  elsif answer == "y"
-    redo
-  else
-    break
-  end
+  break unless answer == "yes" || answer == "y"
 end
 
 puts "Thank you for using our calculator."
