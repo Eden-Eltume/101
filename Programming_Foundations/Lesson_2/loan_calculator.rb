@@ -11,7 +11,7 @@ def valid_number?(num)
 end
 
 def prompt(message)
-  puts ("=> #{message}")
+  puts "=> #{message}"
 end
 
 def get_data(text)
@@ -32,10 +32,10 @@ loop do
 
   # Perform calculation
   loan_in_months = loan_in_years * 12
-  monthly_interest = (annual_interest / 100) /12
+  monthly_interest = (annual_interest / 100) / 12
 
   monthly_payment = loan_amount * (monthly_interest /
-                                  (1 - (1 + monthly_interest) ** (-loan_in_months)))
+                                  (1 - (1 + monthly_interest)**-loan_in_months))
 
   # Output
   puts "---------------------------------------------------"
@@ -43,14 +43,16 @@ loop do
   puts "---------------------------------------------------"
 
   # Perform another calculation?
-  answer = ''
-  loop do
-    print "Another calculation? (y/n): "
-    answer = gets.chomp.strip.downcase
-    break if answer.start_with?("y", "n")
-    puts "Please choose 'y' or 'n'"
+  print "Another calculation? (y/n): "
+  answer = gets.chomp.strip.downcase
+
+  if answer == "yes"
+    redo
+  elsif answer == "y"
+    redo
+  else
+    break
   end
-  break if answer.start_with?("n")
 end
 
 puts "Thank you for using our calculator."
