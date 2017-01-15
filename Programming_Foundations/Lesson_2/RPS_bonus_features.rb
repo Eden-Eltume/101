@@ -108,9 +108,3 @@ end
 
 prompt("Thank you for playing. Goodbye!\nYou played #{times_counter} games.\n
 And #{won?(user_wins, computer_wins)} 5 times.")
-
-#      Answers to things to consider
-#      1. It will not work.
-#      2. I get the undefined method_error for before but after it works.
-#      3. Don't really understand question.
-#      4. We could use a case-statement.
