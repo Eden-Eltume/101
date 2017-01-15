@@ -1,18 +1,20 @@
-VALID_CHOICES = ['rock', 'paper', 'scissors']
+VALID_CHOICES = %w(rock paper scissors)
 
 def prompt(message)
   puts "=> #{message}"
 end
 
-def display_result(choice, computer_choice)
-  if (choice == 'rock' && computer_choice == 'scissors') ||
-      (choice == 'paper' && computer_choice == 'rock') ||
-      (choice == 'scissors' && computer_choice == 'paper')
-      prompt("You won!")
-  elsif (computer_choice == 'rock' && choice == 'scissors') ||
-        (computer_choice == 'paper' && choice == 'rock') ||
-        (computer_choice == 'scissors' && choice == 'paper')
-        prompt("You lost!")
+def win?(first, second)
+  (first == 'rock' && second == 'scissors') ||
+    (first == 'paper' && second == 'rock') ||
+    (first == 'scissors' && second == 'paper')
+end
+
+def display_result(player, computer)
+  if win?(player, computer)
+    prompt("You won!")
+  elsif win?(computer, player)
+    prompt("You lost!")
   else
     prompt("It's a tie!")
   end
@@ -43,10 +45,8 @@ end
 
 prompt("Thank you for playing. Goodbye!")
 
-=begin
-      Answers to things to consider
-      1. It will not work.
-      2. I get the undefined method_error for before but after it works.
-      3. Don't really understand question.
-      4. We could use a case-statement.
-=end
+#      Answers to things to consider
+#      1. It will not work.
+#      2. I get the undefined method_error for before but after it works.
+#      3. Don't really understand question.
+#      4. We could use a case-statement.
