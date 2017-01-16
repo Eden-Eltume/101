@@ -1,20 +1,24 @@
-VALID_CHOICES = %w(Rock Paper Scissors Lizard Spock r p s l sp)
-DISPLAY_CHOICES = %w(Rock Paper Scissors Lizard SPock)
+VALID_CHOICES = %w(rock paper scissors lizard spock r p s l sp)
+DISPLAY_CHOICES = %w([R]ock [P]aper [S]cissors [L]izard [SP]ock)
+WINNING_COMBOS = {
+  'rock' => %w(scissors lizard s l),
+  'paper' => %w(rock spock r sp),
+  'scissors' => %w(paper lizard p l),
+  'lizard' => %w(spock paper sp p),
+  'spock' => %w(rock scissors r s),
+  'r' => %w(s l scissors lizard),
+  'p' => %w(r sp rock spock),
+  's' => %w(p l paper lizard),
+  'l' => %w(sp p spock paper),
+  'sp' => %w(r s rock scissors)
+}
 
 def prompt(message)
   puts "=> #{message}"
 end
 
-# Put f instead of first to satisfy Rubocop too many lines cop
-def win?(f, second)
-  (f == 'paper' || f == 'p' && second == 'rock' || second == 'r') ||
-    (f == 'rock' || f == 'r' && second == 'lizard' || second == 'l') ||
-    (f == 'lizard' || f == 'l' && second == 'spock' || second == 'sp') ||
-    (f == 'spock' || f == 'sp' && second == 'scissors' || second == 's') ||
-    (f == 'lizard' || f == 'l' && second == 'paper' || second == 'p') ||
-    (f == 'paper' || f == 'p' && second == 'spock' || second == 'sp') ||
-    (f == 'spock' || f == 's' && second == 'rock' || second == 'r') ||
-    (f == 'rock' || f == 'r' && second == 'scissors' || second == 's')
+def win?(first, second)
+  WINNING_COMBOS[first].include?(second)
 end
 #    Paper covers rock
 #    Rock crushes lizard
@@ -30,18 +34,12 @@ end
 # It implicitly returns the corresponding string
 def convert_abbreviation(abbr)
   case abbr
-  when 'p'
-    "Paper"
-  when 'r'
-    "Rock"
-  when 's'
-    "Scissors"
-  when 'l'
-    "Lizard"
-  when 'sp'
-    "Spock"
-  else
-    abbr
+  when 'p'  then "Paper"
+  when 'r'  then "Rock"
+  when 's'  then "Scissors"
+  when 'l'  then "Lizard"
+  when 'sp' then "Spock"
+  else           abbr
   end
 end
 
@@ -62,11 +60,11 @@ user_wins = 0
 computer_wins = 0
 
 # Determines if you won or lost
-def won?(x, y)
-  if x > y
-    "you won"
-  elsif y > x
-    "computer won"
+def display_winner(user_wins, computer_wins)
+  if user_wins > computer_wins
+    "you won #{user_wins} times!"
+  elsif computer_wins > user_wins
+    "computer won #{computer_wins} times!"
   else
     "you guys tied."
   end
@@ -89,13 +87,13 @@ loop do
   convert_choice = convert_abbreviation(choice)
 
   puts "You chose: #{convert_choice}. Computer chose #{convert_comp_choice}."
-  dr = display_result(choice, computer_choice)
+  result = display_result(choice, computer_choice)
 
-  puts dr
+  puts result
   times_counter += 1
-  if dr == "You won!"
+  if result == "You won!"
     user_wins += 1
-  elsif dr == "You lost!"
+  elsif result == "You lost!"
     computer_wins += 1
   end
 
@@ -107,4 +105,4 @@ loop do
 end
 
 prompt("Thank you for playing. Goodbye!\nYou played #{times_counter} games.\n
-And #{won?(user_wins, computer_wins)} 5 times.")
+And #{display_winner(user_wins, computer_wins)}.")
