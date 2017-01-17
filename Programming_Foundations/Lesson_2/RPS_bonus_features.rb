@@ -99,9 +99,9 @@ loop do
 
   # Runs this code before asking to play again. So it makes sense.
   break if user_wins >= 5 || computer_wins >= 5
-  prompt("Do you want to play again?")
+  prompt("Do you want to play again? [Y]es or [n]o?")
   answer = gets.chomp.strip.downcase
-  break unless answer.downcase.start_with?('y')
+  break unless answer.downcase == "y"
 end
 
 prompt("Thank you for playing. Goodbye!\nYou played #{times_counter} games.\n
