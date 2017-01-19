@@ -1,3 +1,24 @@
+# Question 1
+# Nothing, nil.
+
+# Question 2
+{:a=>"hi there"}
+
+# Question 3
+# part a
+"One"
+"Two"
+"Three"
+# part b
+"One"
+"Two"
+"Three"
+# part c
+"Two"
+"Three"
+"One"
+
+# Question 4
 def dot_separated_ip_address?(input_string)
   return false unless input_string.is_a? String
   dot_separated_words = input_string.split(".")
