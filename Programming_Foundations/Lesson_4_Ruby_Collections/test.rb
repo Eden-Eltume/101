@@ -1,11 +1,2 @@
-def greeting
-  puts 'Hello!'
-end
-
-number_of_greetings = 2
-
-count = 0
-while count < number_of_greetings
-  puts greeting
-  count += 1
-end
+a = [5, 9, 3, 11]
+puts a.min(2)
