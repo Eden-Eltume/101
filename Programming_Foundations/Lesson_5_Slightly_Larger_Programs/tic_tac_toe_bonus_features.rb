@@ -68,7 +68,7 @@ def choose_first_turn(first_turn)
   end
 end
 
-def place_piece(brd, current_player)
+def place_piece!(brd, current_player)
   player_places_piece!(brd) if current_player == "player"
   computer_places_piece!(brd) if current_player == "computer"
 end
@@ -86,7 +86,7 @@ end
 
 def computer_squares_at_risk(line, brd, marker)
   if brd.values_at(*line).count(marker) == 2
-    brd.select { |k, v| line.include?(k) && v == INITIAL_MARKER }.keys.first
+    brd.select { |key, value| line.include?(key) && value == INITIAL_MARKER }.keys.first
   end
 end
 
@@ -157,15 +157,16 @@ loop do
     current_player = first_turn
 
     loop do
+      clear_screen
       display_board(board)
 
-      place_piece(board, current_player)
+      place_piece!(board, current_player)
       break if someone_won?(board) || board_full?(board)
       current_player = change_player(current_player)
     end
 
-    display_board(board)
     clear_screen
+    display_board(board)
 
     player_score += 1 if detect_winner(board) == "Player"
     computer_score += 1 if detect_winner(board) == "Computer"
@@ -183,9 +184,7 @@ loop do
     next unless player_score == 5 || computer_score == 5
     prompt "Play again? (y or n)"
     answer = gets.chomp
-    break unless answer.downcase.start_with?("y")
-    player_score = 0
-    computer_score = 0
+    break unless answer.downcase == "y"
   end
   break
 end
