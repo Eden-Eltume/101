@@ -181,7 +181,7 @@ loop do
     prompt "Current score: Player #{player_score}. Computer #{computer_score}."
     prompt "------------------------------------"
 
-    next unless player_score == 1 || computer_score == 1
+    next unless player_score == 5 || computer_score == 5
     prompt "Play again? (y or n)"
     answer = gets.chomp
     break if answer.downcase == "y"
