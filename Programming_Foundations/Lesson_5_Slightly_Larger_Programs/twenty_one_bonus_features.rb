@@ -19,7 +19,6 @@ end
 
 def total(cards)
   values = cards.map { |card| card[1] }
-
   sum = 0
   values.each do |value|
     if value == VALS.last
@@ -30,11 +29,9 @@ def total(cards)
       sum += value.to_i
     end
   end
-
   values.select { |value| value == "A" }.count.times do
     sum -= 10 if sum > WINNING_SCORE
   end
-
   sum
 end
 
@@ -62,7 +59,7 @@ end
 score = { 'player' => 0, 'dealer' => 0 }
 def scoreboard(dealer_cards, player_cards, score)
   result = detect_result(dealer_cards, player_cards)
-
+  
   case result
   when :player
     score['player'] += 1
