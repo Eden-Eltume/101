@@ -20,8 +20,8 @@ end
 def total(cards)
   values = cards.map { |card| card[1] }
   sum = 0
-  sum += values.each do |value|
-    if value == VALS.last
+  values.each do |value|
+    sum += if value == VALS.last
       11
     elsif value.to_i.zero?
       10
@@ -56,7 +56,6 @@ def detect_result(dealer_cards, player_cards)
   end
 end
 
-score = { 'player' => 0, 'dealer' => 0 }
 def scoreboard(dealer_cards, player_cards, score)
   result = detect_result(dealer_cards, player_cards)
   case result
@@ -97,16 +96,15 @@ def play_again?
   answer.downcase.start_with?('y')
 end
 
+score = { 'player' => 0, 'dealer' => 0 }
 prompt "Welcome to #{GAME_NAME}! Best 2 out of 3!"
 loop do
   prompt "Welcome again to #{GAME_NAME}!"
 
-  # initialize vars
   deck = initialize_deck
   player_cards = []
   dealer_cards = []
 
-  # initial deal
   2.times do
     player_cards << deck.pop
     dealer_cards << deck.pop
@@ -116,7 +114,6 @@ loop do
   prompt "You have: #{player_cards[0]} and #{player_cards[1]},
           for a total of #{total(player_cards)}."
 
-  # player turn
   loop do
     player_turn = nil
     loop do
@@ -145,7 +142,6 @@ loop do
     prompt "You stayed at #{total(player_cards)}"
   end
 
-  # dealer turn
   prompt "Dealer turn..."
 
   loop do
@@ -166,7 +162,6 @@ loop do
     prompt "Dealer stays at #{total(dealer_cards)}"
   end
 
-  # both player and dealer stays - compare cards!
   puts "=============="
   prompt "Dealer has #{dealer_cards}, for a total of: #{total(dealer_cards)}"
   prompt "Player has #{player_cards}, for a total of: #{total(player_cards)}"
