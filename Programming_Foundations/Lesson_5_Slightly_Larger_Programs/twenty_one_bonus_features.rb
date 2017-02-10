@@ -1,5 +1,5 @@
-SUITS = ['H', 'D', 'S', 'C']
-VALUES = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
+SUITS = ['H', 'D', 'S', 'C'].freeze
+VALS = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'].freeze
 WINNING_SCORE = 21
 MAX_DEALER_HIT = 17
 ROUNDS = 2
@@ -10,7 +10,7 @@ def prompt(msg)
 end
 
 def initialize_deck
-  SUITS.product(VALUES).shuffle
+  SUITS.product(VALS).shuffle
 end
 
 def clear_screen
@@ -22,9 +22,9 @@ def total(cards)
 
   sum = 0
   values.each do |value|
-    if value == "A"
+    if value == VALS.last
       sum += 11
-    elsif value.to_i == 0
+    elsif value.to_i.zero?
       sum += 10
     else
       sum += value.to_i
@@ -117,7 +117,8 @@ loop do
   end
 
   prompt "Dealer has #{dealer_cards[0]} and ?"
-  prompt "You have: #{player_cards[0]} and #{player_cards[1]}, for a total of #{total(player_cards)}."
+  prompt "You have: #{player_cards[0]} and #{player_cards[1]},
+          for a total of #{total(player_cards)}."
 
   # player turn
   loop do
