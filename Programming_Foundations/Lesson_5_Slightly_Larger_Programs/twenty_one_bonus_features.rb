@@ -1,6 +1,9 @@
-SUITS = ['H', 'D', 'S', 'C'].freeze
-VALUES = ['2', '3', '4', '5', '6', '7', '8', '9', '10',
-          'J', 'Q', 'K', 'A'].freeze
+SUITS = ['H', 'D', 'S', 'C']
+VALUES = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
+WINNING_SCORE = 21
+MAX_DEALER_HIT = 17
+ROUNDS = 2
+GAME_NAME = 'Twenty-One'.freeze
 
 def prompt(msg)
   puts "=> #{msg}"
@@ -10,41 +13,42 @@ def initialize_deck
   SUITS.product(VALUES).shuffle
 end
 
+def clear_screen
+  system('clear') || system('cls')
+end
+
 def total(cards)
-  # cards = [['H', '3'], ['S', 'Q'], ... ]
   values = cards.map { |card| card[1] }
 
   sum = 0
   values.each do |value|
     if value == "A"
       sum += 11
-    elsif value.to_i.zero? # J, Q, K
+    elsif value.to_i == 0
       sum += 10
     else
       sum += value.to_i
     end
   end
 
-  # correct for Aces
   values.select { |value| value == "A" }.count.times do
-    sum -= 10 if sum > 21
+    sum -= 10 if sum > WINNING_SCORE
   end
 
   sum
 end
 
 def busted?(cards)
-  total(cards) > 21
+  total(cards) > WINNING_SCORE
 end
 
-# :tie, :dealer, :player, :dealer_busted, :player_busted
 def detect_result(dealer_cards, player_cards)
   player_total = total(player_cards)
   dealer_total = total(dealer_cards)
 
-  if player_total > 21
+  if player_total > WINNING_SCORE
     :player_busted
-  elsif dealer_total > 21
+  elsif dealer_total > WINNING_SCORE
     :dealer_busted
   elsif dealer_total < player_total
     :player
@@ -52,6 +56,24 @@ def detect_result(dealer_cards, player_cards)
     :dealer
   else
     :tie
+  end
+end
+
+score = { 'player' => 0, 'dealer' => 0 }
+def scoreboard(dealer_cards, player_cards, score)
+  result = detect_result(dealer_cards, player_cards)
+
+  case result
+  when :player
+    score['player'] += 1
+  when :dealer_busted
+    score['player'] += 1
+  when :dealer
+    score['dealer'] += 1
+  when :player_busted
+    score['dealer'] += 1
+  else
+    puts "Neither player won this round."
   end
 end
 
@@ -68,29 +90,7 @@ def display_result(dealer_cards, player_cards)
   when :dealer
     prompt "Dealer wins!"
   when :tie
-    prompt "It's a tie"
-  end
-end
-
-
-def winner?(dealer_cards, player_cards)
-  player_wins = 0
-  dealer_wins = 0
-  case detect_result(dealer_cards, player_cards)
-  when :player_busted
-    dealer_wins += 1
-    puts "dealer #{dealer_wins}"
-  when :dealer_busted
-    player_wins += 1
-    puts "player #{player_wins}"
-  when :player
-    player_wins += 1
-    puts "player #{player_wins}"
-  when :dealer
-    dealer_wins += 1
-    puts "dealer #{dealer_wins}"
-  else
-    puts "It's a tie"
+    prompt "It's a tie!"
   end
 end
 
@@ -101,9 +101,9 @@ def play_again?
   answer.downcase.start_with?('y')
 end
 
-
+prompt "Welcome to #{GAME_NAME}! Best 2 out of 3!"
 loop do
-  prompt "Welcome to Twenty-One!"
+  prompt "Welcome again to #{GAME_NAME}!"
 
   # initialize vars
   deck = initialize_deck
@@ -117,8 +117,7 @@ loop do
   end
 
   prompt "Dealer has #{dealer_cards[0]} and ?"
-  prompt "You have: #{player_cards[0]} and #{player_cards[1]},
-          for a total of #{total(player_cards)}."
+  prompt "You have: #{player_cards[0]} and #{player_cards[1]}, for a total of #{total(player_cards)}."
 
   # player turn
   loop do
@@ -142,6 +141,8 @@ loop do
 
   if busted?(player_cards)
     display_result(dealer_cards, player_cards)
+    scoreboard(dealer_cards, player_cards, score)
+    break if score['player'] == ROUNDS || score['dealer'] == ROUNDS
     play_again? ? next : break
   else
     prompt "You stayed at #{total(player_cards)}"
@@ -151,7 +152,7 @@ loop do
   prompt "Dealer turn..."
 
   loop do
-    break if busted?(dealer_cards) || total(dealer_cards) >= 17
+    break if busted?(dealer_cards) || total(dealer_cards) >= MAX_DEALER_HIT
 
     prompt "Dealer hits!"
     dealer_cards << deck.pop
@@ -161,6 +162,8 @@ loop do
   if busted?(dealer_cards)
     prompt "Dealer total is now: #{total(dealer_cards)}"
     display_result(dealer_cards, player_cards)
+    scoreboard(dealer_cards, player_cards, score)
+    break if score['player'] == ROUNDS || score['dealer'] == ROUNDS
     play_again? ? next : break
   else
     prompt "Dealer stays at #{total(dealer_cards)}"
@@ -172,11 +175,11 @@ loop do
   prompt "Player has #{player_cards}, for a total of: #{total(player_cards)}"
   puts "=============="
 
+  clear_screen
   display_result(dealer_cards, player_cards)
+  scoreboard(dealer_cards, player_cards, score)
 
-  winner?(dealer_cards, player_cards)
-
-  break unless play_again?
+  break if score['player'] == ROUNDS || score['dealer'] == ROUNDS
 end
 
 prompt "Thank you for playing Twenty-One! Good bye!"

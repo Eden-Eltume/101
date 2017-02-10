@@ -25,7 +25,7 @@ def total(cards)
   end
 
   # correct for Aces
-  values.select { |value| value == "A"}.count.times do
+  values.select { |value| value == "A" }.count.times do
     sum -= 10 if sum > 21
   end
 
@@ -67,7 +67,7 @@ def display_result(dealer_cards, player_cards)
   when :dealer
     prompt "Dealer wins!"
   when :tie
-    prompt "It's a tie"
+    prompt "It's a tie!"
   end
 end
 
@@ -108,7 +108,7 @@ loop do
     if player_turn == 'h'
       player_cards << deck.pop
       prompt "You chose to hit!"
-      prompt "Your cards are now: #{player-cards}"
+      prompt "Your cards are now: #{player_cards}"
       prompt "Your total is now: #{total(player_cards)}"
     end
 
