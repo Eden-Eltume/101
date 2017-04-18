@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Document metadata -->
+    <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+    <title> Madlibs </title>
+    <h1 id="ml"> Madlibs </h1>
+  </head>
+  <body>
+    <!-- Document content -->
+    <ul>
+        <p> Enter a noun:</p>
+        <input type="text" id="noun_id" name="noun" placeholder="e.g. Thing/place">
+        <script>
+          var noun_var = document.getElementById("noun_id").value;
+        </script>
+
+        <p> Enter a verb:</p>
+        <input type="text" id="verb_id" name="verb" placeholder="e.g. Run/Jump">
+        <script>
+          var verb_var = document.getElementById("verb_id").value;
+        </script>
+
+
+        <p> Enter a adjective:</p>
+        <input type="text" id="adjective_id" name="adjective" placeholder="e.g. Blue">
+        <script>
+          var adjective_var = document.getElementById("adjective_id").value;
+        </script>
+
+
+        <p> Enter a adverb:</p>
+        <input type="text" id="adverb_id"name="adverb" placeholder="e.g. ending in -ly">
+        <script>
+          var adverb_var = document.getElementById("adverb_id").value;
+        </script>
+      
+    </ul>
+    <button onclick="myFunction()">Submit</button>
+    <script>
+
+    function sample(array) {
+      return array[Math.floor ( Math.random() * array.length )]
+    }
+    function myFunction() {
+      var noun2 = document.getElementById("noun_id").value;
+      var verb2 = document.getElementById("verb_id").value;
+      var adjective2 = document.getElementById("adjective_id").value;
+      var adverb2 = document.getElementById("adverb_id").value;
+      var sen1 = "Do you " + verb2 + " your " + adjective2 + " "  + noun2 + " " + adverb2 + "? That's hilarious!"
+      var sen2 = "The " + adjective2 + " " + noun2 + " " + verb2 + "s " + adverb2 + " over the lazy dog."
+      var sen3 = "The " + noun2 + " " + adverb2 + " " + verb2 + "s up " + adjective2 + " Joe's turtle."
+      var ransen = [sen1, sen2, sen3]
+      var samp = sample(ransen)
+      window.alert(samp)
+    }
+    </script>
+  </body>
+</html>
