@@ -1,0 +1,15 @@
+def reversed_number(int)
+  str_num = int.to_s
+  if str_num.include?('0')
+    str_num.delete('0')
+  else
+    str_num.reverse
+  end
+  str_num.to_i
+end
+
+p reversed_number(12345) == 54321
+p reversed_number(12213) == 31221
+p reversed_number(456) == 654
+p reversed_number(12000) == 21 # Note that zeros get dropped!
+p reversed_number(1) == 1
