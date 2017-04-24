@@ -1,4 +1,6 @@
-words = %w(eleven)
+text = File.read("hangwords.txt")
+
+words = text.split( )
 the_word = words.sample
 
 def prompt(word)
@@ -18,10 +20,10 @@ def initial_board(the_word, initial_array)
   end
 end
 
-tries_left = chars_in_word(the_word)
+tries_left = chars_in_word(the_word) + 6
 
 def guess_letter(the_word, letter, initial_array)
-  if the_word.include?(letter)
+  if the_word.downcase.include?(letter.downcase) && initial_array.include?(letter.downcase) == false
 
     counter = 0
     loop do
@@ -29,13 +31,15 @@ def guess_letter(the_word, letter, initial_array)
       current_letter = the_word[counter]
       current_index = the_word.index(current_letter)
 
-      if current_letter == letter
+      if current_letter.downcase == letter.downcase
         initial_array.insert(counter, current_letter)
         initial_array.delete_at(counter + 1)
       end
       counter += 1
     end
     true
+  elsif initial_array.include?(letter.downcase) == true
+    'already'
   else
     prompt("Your guess was wrong!")
     false
@@ -54,7 +58,7 @@ def clear_screen
 end
 
 initial_board(the_word, initial_array)
-prompt "The word has #{chars_in_word(the_word)} letters and you also have #{chars_in_word(the_word)} guesses. Guess them one letter at a time:"
+prompt "The word has #{chars_in_word(the_word)} letters and you have #{chars_in_word(the_word) + 6} guesses. Take a guess. One letter at a time:"
 counter = 0
 loop do
   display_board(initial_array)
@@ -66,7 +70,9 @@ loop do
   end
   if result == false
     tries_left -= 1
-    prompt("Wrong. You have #{tries_left} tries left.")
+    prompt("You have #{tries_left} tries left.")
+  elsif result == 'already'
+    prompt("You guessed the letter #{answer} already! No points deducted. Try again!")
   else
     prompt("Good guess!")
   end
