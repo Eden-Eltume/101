@@ -1,4 +1,4 @@
-words = %w(first second third fourth fifth sixth seventh eight ten eleven twelve)
+words = %w(eleven)
 the_word = words.sample
 
 def prompt(word)
@@ -22,9 +22,19 @@ tries_left = chars_in_word(the_word)
 
 def guess_letter(the_word, letter, initial_array)
   if the_word.include?(letter)
-    index_of_letter = the_word.rindex(letter)
-    initial_array.insert(index_of_letter, letter)
-    initial_array.delete_at(index_of_letter+1)
+
+    counter = 0
+    loop do
+      break if counter == the_word.length
+      current_letter = the_word[counter]
+      current_index = the_word.index(current_letter)
+
+      if current_letter == letter
+        initial_array.insert(counter, current_letter)
+        initial_array.delete_at(counter + 1)
+      end
+      counter += 1
+    end
     true
   else
     prompt("Your guess was wrong!")
@@ -83,7 +93,9 @@ ____|_____
 WIN
 
 if tries_left == 0
+  prompt("Sorry, the word was #{the_word}.")
   puts hanged
 else
+  display_board(initial_array)
   puts survived
 end
