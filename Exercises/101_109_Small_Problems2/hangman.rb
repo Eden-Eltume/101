@@ -59,15 +59,18 @@ end
 
 initial_board(the_word, initial_array)
 prompt "The word has #{chars_in_word(the_word)} letters and you have #{chars_in_word(the_word) + 6} guesses. Take a guess. One letter at a time:"
+answer_arr = []
 counter = 0
 loop do
   display_board(initial_array)
   prompt("What letter do you think it contains?")
   answer = gets.chomp
+  answer_arr << answer
   result = guess_letter(the_word, answer, initial_array)
   if counter > 0
     clear_screen
   end
+  prompt("You've guessed the following letters: #{answer_arr}")
   if result == false
     tries_left -= 1
     prompt("You have #{tries_left} tries left.")
