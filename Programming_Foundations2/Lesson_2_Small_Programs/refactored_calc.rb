@@ -24,13 +24,13 @@ loop do # Main loop
   first_number = '' # Initialized here to be able to use outside the loop
   loop do
     prompt("What's the first number?")
-    first_number = gets.chomp.to_f 
+    first_number = gets.chomp.to_f
 
     if valid_number?(first_number)
       break
     else
       puts "Hmm... that doesn't look like a valid number."
-    end 
+    end
   end
 
   second_number = ''
@@ -61,7 +61,7 @@ loop do # Main loop
     if %w(1 2 3 4).include?(choice)
       break
     else
-      puts ("You must choose 1, 2, 3 or 4!")
+      puts "You must choose 1, 2, 3 or 4!"
       choice = gets.chomp
     end
   end
