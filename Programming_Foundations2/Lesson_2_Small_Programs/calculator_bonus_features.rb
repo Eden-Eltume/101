@@ -78,7 +78,7 @@ loop do # Main loop
     if %w(1 2 3 4).include?(choice)
       break
     else
-      puts "You must choose 1, 2, 3 or 4!"
+      puts MESSAGES["choose_one"]
       choice = gets.chomp
     end
   end
