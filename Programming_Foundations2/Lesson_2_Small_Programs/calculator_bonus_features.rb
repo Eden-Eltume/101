@@ -26,12 +26,12 @@ puts(messages("welcome", "ht"))
 
 user_name = ''
 loop do
-  user_name = gets.chomp
-  if user_name.empty?()
+  user_name = gets.chomp.strip
+  if user_name.match?(/[a-zA-Z]/)
+    break
+  else
     puts(messages("valid_name"))
     puts(messages("valid_name", "ht"))
-  else
-    break
   end
 end
 
@@ -85,20 +85,21 @@ loop do # Main loop
 
   case choice
   when '1'
-    puts MESSAGES["adding"] + (first_number.to_f + second_number.to_f).to_s
+    puts MESSAGES["adding"] + (first_number.to_f + second_number.to_f).round(2).to_s
   when '2'
-    puts MESSAGES["subtracting"] + (first_number.to_f - second_number.to_f).to_s
+    puts MESSAGES["subtracting"] + (first_number.to_f - second_number.to_f).round(2).to_s
   when '3'
-    puts MESSAGES["multiplying"] + (first_number.to_f * second_number.to_f).to_s
+    puts MESSAGES["multiplying"] + (first_number.to_f * second_number.to_f).round(2).to_s
   when '4'
-    puts MESSAGES["dividing"] + (first_number.to_f / second_number.to_f).to_s
+    puts MESSAGES["dividing"] + (first_number.to_f / second_number.to_f).round(2).sto_s
   else
     puts MESSAGES["invalid_op"]
   end
 
   puts MESSAGES["again?"]
   answer = gets.chomp
-  break unless answer.downcase.start_with?('y')
+  break unless answer.downcase == 'y' || answer.downcase == 'yes'
+  system('clear') || system('cls')
 end
 
 puts MESSAGES["good_bye"]
