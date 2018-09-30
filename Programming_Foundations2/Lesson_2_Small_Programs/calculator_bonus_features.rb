@@ -85,13 +85,17 @@ loop do # Main loop
 
   case choice
   when '1'
-    puts MESSAGES["adding"] + (first_number.to_f + second_number.to_f).round(2).to_s
+    result_of_adding = (first_number.to_f + second_number.to_f).round(2)
+    puts MESSAGES["adding"] + result_of_adding.to_s
   when '2'
-    puts MESSAGES["subtracting"] + (first_number.to_f - second_number.to_f).round(2).to_s
+    result_of_subtracting = (first_number.to_f - second_number.to_f).round(2)
+    puts MESSAGES["subtracting"] + result_of_subtracting.to_s
   when '3'
-    puts MESSAGES["multiplying"] + (first_number.to_f * second_number.to_f).round(2).to_s
+    result_of_multiplying = (first_number.to_f * second_number.to_f).round(2)
+    puts MESSAGES["multiplying"] + result_of_multiplying.to_s
   when '4'
-    puts MESSAGES["dividing"] + (first_number.to_f / second_number.to_f).round(2).sto_s
+    result_of_dividing = (first_number.to_f / second_number.to_f).round(2)
+    puts MESSAGES["dividing"] + result_of_dividing.to_s
   else
     puts MESSAGES["invalid_op"]
   end
