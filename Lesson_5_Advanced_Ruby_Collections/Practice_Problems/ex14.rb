@@ -34,5 +34,3 @@ hsh.map do |_, value|
   end
 end
 # => [["Red", "Green"], "MEDIUM", ["Red", "Green"], ["Orange"], "LARGE"]
-
-p fruits_and_vegetables(hsh)
